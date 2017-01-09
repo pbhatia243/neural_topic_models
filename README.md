@@ -26,11 +26,6 @@ To train a model with Ubuntu dataset:
 
     $ python train_tp.py --vocab_path data/vocab.en --data_path some_yaks.txt --model_dir models/ --vocab 75000
 
-To test an existing model:
-
-    $ python neural_conversation_model.py --train_dir ubuntu/ --en_vocab_size 60000 --size 512 --data_path ubuntu/train.tsv --dev_data ubuntu/valid.tsv  --vocab_path ubuntu/60k_vocan.en --attention --decode --beam_search --beam_size 25
-
-
 
 
 ## Contact

@@ -132,12 +132,12 @@ class DataBuilder():
         revs = []
         # pos_file = loadmodel(data_folder[0])
         # neg_file = loadmodel(data_folder[1])
-        pos_yaks = loadmodel(data_folder[0]).get("content")
-        neg_yaks = loadmodel(data_folder[1]).get("content")
+        pos_texts = loadmodel(data_folder[0]).get("content")
+        neg_texts = loadmodel(data_folder[1]).get("content")
         vocab = defaultdict(float)
         happyList = [ ":-)", ":)", ":D", ":o)", ":]", ":3", ":c)", ":>", "=]", "8)", "=)", ":}", ":^)", ":?)",   ":-)", ": )", ": D", ": o)", ":]", ": 3", ":c)", ":>", "= ]", "8 )", "= )", ": }", ":^)", ":?)"   ]
         sadList = [ ">:[", ":-(", ":(", ":-c", ":c", ":-<", ":?C", ":<", ":-[", ":[", ":{",">:[", ":-(", ": (", ":-c", ": c", ": -<", ": ?C", ": <", ": -[", ": [", ": {" ]
-        for line in pos_yaks:
+        for line in pos_texts:
                 rev = []
                 rev.append(line.strip())
 
@@ -158,7 +158,7 @@ class DataBuilder():
                           "split": np.random.randint(0,cv)}
                 revs.append(datum)
 
-        for line in neg_yaks:
+        for line in neg_texts:
                 rev = []
                 rev.append(line.strip())
                 if clean_string:

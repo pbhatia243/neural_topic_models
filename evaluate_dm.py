@@ -133,24 +133,24 @@ def similarity( sess, nvdm, vocab, rev_voc, num=10):
             print rev_voc[ranks]
 
 def get_eval(vocab):
-    yaks = []
+    texts = []
     indxs = []
-    yak_text = []
-    with codecs.open("some_yaks.txt", 'rb')  as fi:
+    text_text = []
+    with codecs.open("some_texts.txt", 'rb')  as fi:
         for line in fi.readlines():
-            yaks.append(line.rstrip().lower())
-    eval_text = generate_data(yaks)
-    final_yaks = []
+            texts.append(line.rstrip().lower())
+    eval_text = generate_data(texts)
+    final_texts = []
     for i, line in enumerate(eval_text):
         sen2token = []
         for w in line:
             if w in vocab:
                 sen2token.append(vocab.get(w))
         if len(sen2token) > 1 :
-            final_yaks.append(line)
+            final_texts.append(line)
             indxs.append(sen2token)
-            yak_text.append(yaks[i])
-    return final_yaks, indxs, yak_text
+            text_text.append(texts[i])
+    return final_texts, indxs, text_text
 
 def doc_similarity(sess, nvdm, vocab):
     eval_text = ["need to go to gym and workout", "i can not tolerate racism and stereotypes",
@@ -159,7 +159,7 @@ def doc_similarity(sess, nvdm, vocab):
                  "breaking bad the best tv series ever", "women empowerment or feminism ?", "I want to eat pizza"]
     eval_text = generate_data(eval_text)
     lat_rep_list = []
-    final_yaks, indxs, yak_text = get_eval(vocab)
+    final_texts, indxs, text_text = get_eval(vocab)
     for word_idxs in indxs:
         # print word_idxs
         x = np.bincount(list(word_idxs), minlength=len(vocab))
@@ -190,8 +190,8 @@ def doc_similarity(sess, nvdm, vocab):
         dist = np.hstack(dist)
         ranked = np.squeeze(dist.argsort())[:10]
         for ranks in ranked:
-            print final_yaks[ranks]
-            print yak_text[ranks]
+            print final_texts[ranks]
+            print text_text[ranks]
 
 def topic_similarity(sess, nvdm, vocab, rev_voc):
 
@@ -239,7 +239,7 @@ if __name__=="__main__":
     vocab_path = "data/vocab_80k.en"
     # data_path = "All_100000_100k_data.txt"
     checkpoint_dir = "model_checkpoints/"
-    model_dir = "yikyak_data/"
+    model_dir = "datatext_data/"
     latent_dim = 200
     vocab, rev_voc = initialize_vocabulary(vocab_path)
     sess, nvdm = load_model(checkpoint_dir, model_dir, latent_dim)
@@ -261,7 +261,7 @@ if __name__=="__main__":
     #         dump(D, fout)
     #     print 'Save model into file {}'.format(fname)
     # get_embedding(sess, nvdm)
-    # yaks, indxs = get_eval(vocab)
+    # texts, indxs = get_eval(vocab)
     # doc_similarity(sess, nvdm, vocab)
     # test_topic_words(sess, nvdm, rev_voc)
     similarity(sess, nvdm, vocab, rev_voc)

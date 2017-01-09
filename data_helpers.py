@@ -13,7 +13,7 @@ import os
 import sys
 reload(sys)
 sys.path.insert(0, '../')
-# from topic_models.utils import spacy_tokenize_yak
+# from topic_models.utils import spacy_tokenize_data
 _WORD_SPLIT = re.compile("([.,!/?\":;)(])")
 _DIGIT_RE = re.compile(r"\d")
 
@@ -51,8 +51,8 @@ def create_vocabulary_data(vocabulary_path, data, max_vocabulary_size,
         counter += 1
         if counter % 100000 == 0:
           print("  processing line %d" % counter)
-        # yak =line.rstrip()
-        # txt  = yak
+        # data =line.rstrip()
+        # txt  = data
         # tokens = tokenizer(txt) if tokenizer else basic_tokenizer(txt)
         for w in line:
           # word = re.sub(_DIGIT_RE, "0", w) if normalize_digits else w
@@ -96,8 +96,8 @@ def create_vocabulary(vocabulary_path, data_path, max_vocabulary_size,
         counter += 1
         if counter % 100000 == 0:
           print("  processing line %d" % counter)
-        yak =line.rstrip()
-        txt  = yak
+        data =line.rstrip()
+        txt  = data
         tokens = tokenizer(txt) if tokenizer else basic_tokenizer(txt)
         for w in tokens:
           # word = re.sub(_DIGIT_RE, "0", w) if normalize_digits else w
@@ -181,11 +181,11 @@ def generate( fn, pos_mode = 2):
                     for stopword in stopwords:
                         line = line.replace(stopword, " ")
 
-                    words, yak_u = Utils.spacy_tokenize_yak(line, nlp, lmtzr, tags)
+                    words, data_u = Utils.spacy_tokenize_data(line, nlp, lmtzr, tags)
 
                     i+=1
                     if i%1000==0:
-                        print str(i) ,  " yaks processed so far"
+                        print str(i) ,  " datas processed so far"
                     all.append(words)
 
          return all

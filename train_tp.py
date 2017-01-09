@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+x#! /usr/bin/env python
 
 import tensorflow as tf
 import numpy as np
@@ -56,7 +56,7 @@ class Neural_DM():
 
         print("Vocabulary Size: {:d}".format(en_vocab_size))
         print("Train/Dev split: {:d}/{:d}".format(len(train_set), len(train_set)))
-        # yaks, indxs = self.get_eval(vocab)
+        # texts, indxs = self.get_eval(vocab)
         with tf.Graph().as_default():
             session_conf = tf.ConfigProto(
               allow_soft_placement=self.allow_soft_placement,
@@ -135,15 +135,15 @@ class Neural_DM():
             self.train_model_batch( train_set, en_vocab_size, vocab, rev_vocab )
 
     def get_eval(self, vocab):
-        yaks = []
+        texts = []
         indxs = []
-        with codecs.open( "some_yaks.txt", 'rb')  as fi:
+        with codecs.open( "some_texts.txt", 'rb')  as fi:
                 for line in fi.readlines():
-                    yaks.append(line.rstrip().lower())
+                    texts.append(line.rstrip().lower())
                     indxs.append(sentence_to_token_ids(line, vocab))
-        return yaks, indxs
+        return texts, indxs
 
-    def similarity(self, vocab, indxs, yaks):
+    def similarity(self, vocab, indxs, texts):
          eval_text = ["Need to go to gym and workout", "I can not tolerate racism and stereotypes",
                  "I dont want to go for republicans or democrats :P",
                  "Football season is on ", "Any good places to eat pizza ?",
@@ -172,7 +172,7 @@ class Neural_DM():
             dist = np.hstack(dist)
             ranked = np.squeeze(dist.argsort())[:10]
             for ranks in ranked:
-                print yaks[ranks]
+                print texts[ranks]
 
 
     def sample(self, vocab, rev_vocab, sample_size=20, text=None):
@@ -258,7 +258,7 @@ if __name__=="__main__":
     parser.add_argument('--model_dir', type=str, default=model_dir,
                         help='Matching  Model directory. (Defaults to %s)' % (model_dir,))
     parser.add_argument('--dim', type=int, default=dim, help='dimensionality for text . (Defaults to %s)' % (dim,))
-    parser.add_argument('--vocab', type=int, default=en_vocab_size, help='Location for yaks . (Defaults to %s)' % (en_vocab_size,))
+    parser.add_argument('--vocab', type=int, default=en_vocab_size, help='Location for texts . (Defaults to %s)' % (en_vocab_size,))
     args = parser.parse_args()
 
     # limit = args.limit
